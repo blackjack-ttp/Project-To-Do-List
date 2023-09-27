@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "Hello Project To Do List With Blackjack-TTP Web Developer" &&  npm run lint
