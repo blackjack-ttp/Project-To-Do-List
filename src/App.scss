@@ -84,8 +84,8 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            border-bottom: 1px solid var(--yellow-theme-main-color);
             margin-bottom: 10px;
+            margin-top: 25px;
 
             .secondaryBtn {
                 background-color: var(--yellow-theme-background-color);
@@ -112,7 +112,6 @@
         .todo-list {
             display: flex;
             align-items: center;
-            background-color: var(--yellow-theme-background-color);
             padding: 10px 5px;
             box-shadow: 0px 3px 5px rgb(42, 42, 42);
 
@@ -142,7 +141,7 @@
             &__icon {
                 display: flex;
                 align-items: center;
-                justify-content: flex-start;
+                justify-content: flex-end;
                 cursor: pointer;
                 font-size: 35px;
                 margin-right: 10px;
