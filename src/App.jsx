@@ -31,6 +31,13 @@ function App() {
     setNewDescription('');
   };
 
+  const handleDeleteTodo = (index) => {
+    let reducedTodo = [...allTodo];
+    reducedTodo.splice(index);
+    localStorage.setItem('todolist', JSON.stringify(reducedTodo));
+    setTodos(reducedTodo);
+  };
+
   useEffect(() => {
     let savedTodo = JSON.parse(localStorage.getItem('todolist'));
     if (savedTodo) {
@@ -93,7 +100,7 @@ function App() {
                   </div>
                   <div className="todo-list__icon">
                     <div className="todo-list__icon__delete">
-                      <AiOutlineDelete />
+                      <AiOutlineDelete onClick={() => handleDeleteTodo(index)} />
                     </div>
                     <div className="todo-list__icon__check">
                       <AiFillCheckSquare />

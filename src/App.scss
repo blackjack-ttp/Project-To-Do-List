@@ -150,8 +150,14 @@
                     color: var(--yellow-theme-main-color);
                     margin-right: 10px;
                 }
+                &__delete:hover {
+                    color: red;
+                }
                 &__check {
                     color: var(--yellow-theme-main-color);
+                }
+                &__check:hover {
+                    color: green;
                 }
             }
         }
