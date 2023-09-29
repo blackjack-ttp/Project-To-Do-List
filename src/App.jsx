@@ -47,7 +47,7 @@ function App() {
     let hh = now.getHours();
     let min = now.getMinutes();
     let sec = now.getSeconds();
-    const completeOn = dd + '-' + mm + '-' + yyyy + 'at' + hh + ':' + min + ':' + sec;
+    const completeOn = dd + ' - ' + mm + ' - ' + yyyy + ' at ' + hh + ' : ' + min + ' : ' + sec;
     const filteredItem = {
       ...allTodo[index],
       completeOn: completeOn,
@@ -56,12 +56,24 @@ function App() {
     updatedCompleteArr.push(filteredItem);
     setCompletedTodo(updatedCompleteArr);
     handleDeleteTodo(index);
+    localStorage.setItem('completedTodos', JSON.stringify(updatedCompleteArr));
+  };
+
+  const handleDeleteCompletedTodo = (index) => {
+    const reducedTodo = [...completedTodo];
+    reducedTodo.splice(index, 1);
+    localStorage.setItem('completedTodos', JSON.stringify(reducedTodo));
+    setCompletedTodo(reducedTodo);
   };
 
   useEffect(() => {
     let savedTodo = JSON.parse(localStorage.getItem('todolist'));
+    let savedCompletedTodo = JSON.parse(localStorage.getItem('completedTodos'));
     if (savedTodo) {
       setTodos(savedTodo);
+    }
+    if (savedCompletedTodo) {
+      setCompletedTodo(savedCompletedTodo);
     }
   }, []);
 
@@ -145,7 +157,7 @@ function App() {
                     </div>
                     <div className="todo-list__icon">
                       <div className="todo-list__icon__delete" title="Delete">
-                        <AiOutlineDelete onClick={() => handleDeleteTodo(index)} />
+                        <AiOutlineDelete onClick={() => handleDeleteCompletedTodo(index)} />
                       </div>
                     </div>
                   </div>
