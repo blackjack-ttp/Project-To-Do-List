@@ -12,9 +12,28 @@ module.exports = {
   settings: { react: { version: '18.2' } },
   plugins: ['react-refresh'],
   rules: {
-    'react-refresh/only-export-components': [
+    'react/react-in-jsx-scope': 'off',
+    'react/jsx-filename-extension': [
       'warn',
-      { allowConstantExport: true },
+      {
+        extensions: ['.js', '.jsx'],
+      },
     ],
+    'no-console': [
+      'error',
+      {
+        allow: ['info', 'warn', 'error', 'time', 'timeEnd'],
+      },
+    ],
+    'react/prop-types': 'off',
+    'react/display-name': 'off',
+    'react/jsx-key': 'off',
+    'react/no-unknown-property': 'off',
+    'react-hooks/exhaustive-deps': 'off',
   },
-}
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+};
