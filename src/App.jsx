@@ -7,6 +7,7 @@ function App() {
   const [allTodo, setTodos] = useState([]);
   const [newTitle, setNewTitle] = useState('');
   const [newDescription, setNewDescription] = useState('');
+  const [completedTodo, setCompletedTodo] = useState([]);
 
   const handleChangeTitle = (e) => {
     setNewTitle(e.target.value);
@@ -17,12 +18,12 @@ function App() {
   };
 
   const handleAddTodo = () => {
-    let newTodoItem = {
+    const newTodoItem = {
       title: newTitle,
       description: newDescription,
     };
 
-    let updateTodoArr = [...allTodo];
+    const updateTodoArr = [...allTodo];
 
     updateTodoArr.push(newTodoItem);
     setTodos(updateTodoArr);
@@ -32,10 +33,29 @@ function App() {
   };
 
   const handleDeleteTodo = (index) => {
-    let reducedTodo = [...allTodo];
+    const reducedTodo = [...allTodo];
     reducedTodo.splice(index, 1);
     localStorage.setItem('todolist', JSON.stringify(reducedTodo));
     setTodos(reducedTodo);
+  };
+
+  const handleComplete = (index) => {
+    let now = new Date();
+    let dd = now.getDate();
+    let mm = now.getMonth() + 1;
+    let yyyy = now.getFullYear();
+    let hh = now.getHours();
+    let min = now.getMinutes();
+    let sec = now.getSeconds();
+    const completeOn = dd + '-' + mm + '-' + yyyy + 'at' + hh + ':' + min + ':' + sec;
+    const filteredItem = {
+      ...allTodo[index],
+      completeOn: completeOn,
+    };
+    const updatedCompleteArr = [...completedTodo];
+    updatedCompleteArr.push(filteredItem);
+    setCompletedTodo(updatedCompleteArr);
+    handleDeleteTodo(index);
   };
 
   useEffect(() => {
@@ -90,26 +110,48 @@ function App() {
             </button>
           </div>
 
-          {allTodo.map((item, index) => {
-            return (
-              <>
-                <div className="todo-list">
-                  <div className="todo-list__item" key={index}>
-                    <h3>{item.title}</h3>
-                    <p>{item.description}</p>
-                  </div>
-                  <div className="todo-list__icon">
-                    <div className="todo-list__icon__delete">
-                      <AiOutlineDelete onClick={() => handleDeleteTodo(index)} />
+          {isCompleted === false &&
+            allTodo.map((item, index) => {
+              return (
+                <>
+                  <div className="todo-list">
+                    <div className="todo-list__item" key={index}>
+                      <h3>{item.title}</h3>
+                      <p>{item.description}</p>
                     </div>
-                    <div className="todo-list__icon__check">
-                      <AiFillCheckSquare />
+                    <div className="todo-list__icon">
+                      <div className="todo-list__icon__delete" title="Delete">
+                        <AiOutlineDelete onClick={() => handleDeleteTodo(index)} />
+                      </div>
+                      <div className="todo-list__icon__check" title="Check">
+                        <AiFillCheckSquare onClick={() => handleComplete(index)} />
+                      </div>
                     </div>
                   </div>
-                </div>
-              </>
-            );
-          })}
+                </>
+              );
+            })}
+          {isCompleted === true &&
+            completedTodo.map((item, index) => {
+              return (
+                <>
+                  <div className="todo-list">
+                    <div className="todo-list__item" key={index}>
+                      <h3>{item.title}</h3>
+                      <p>{item.description}</p>
+                      <p>
+                        <small>Completed on: {item.completeOn}</small>
+                      </p>
+                    </div>
+                    <div className="todo-list__icon">
+                      <div className="todo-list__icon__delete" title="Delete">
+                        <AiOutlineDelete onClick={() => handleDeleteTodo(index)} />
+                      </div>
+                    </div>
+                  </div>
+                </>
+              );
+            })}
         </div>
       </div>
     </>
