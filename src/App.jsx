@@ -40,7 +40,7 @@ function App() {
   };
 
   const handleComplete = (index) => {
-    let now = new Date();
+    const now = new Date();
     let dd = now.getDate();
     let mm = now.getMonth() + 1;
     let yyyy = now.getFullYear();
